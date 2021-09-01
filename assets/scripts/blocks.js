@@ -25,8 +25,8 @@ Blockly.Blocks['example_dropdown'] = {
     this.appendDummyInput()
         .appendField('Ask me anything:')
         .appendField(new Blockly.FieldDropdown([
-            ['What is the date today?', '30 August 2021'],
-            ['What is the time now?', '05:15 PM'],
+            ['What is the date today?', 'Date'],
+            ['What is the time now?', 'Time'],
             ['How are you?', 'I am good'],
             ['What is JavaScript?', 'JavaScript is a text-based programming language used both on the client-side and server-side that allows you to make web pages interactive.'],
             ['What is your name?', 'Omkar Suresh Chaskar'],
@@ -42,7 +42,6 @@ Blockly.Blocks['example_dropdown'] = {
 //Assign value of question field which value is null to make Bot block functional.
 Blockly.JavaScript["example_bot"] = function (block) {
   var text_input = block.getFieldValue("question");
-
   var code = `
 	var inputTextValue = "${text_input}";
   `;
@@ -52,11 +51,29 @@ Blockly.JavaScript["example_bot"] = function (block) {
 //On Run example_dropdown function get's selected questions answer and then print it over Bot Function
 Blockly.JavaScript["example_dropdown"] = function (block) {
   var text_input = block.getFieldValue("question");
-
-  var code = `
-	var inputTextValue = "${text_input}";
+  if(text_input == "Time"){
+    var today = new Date();
+    var time = today.getHours()+":"+today.getMinutes()+":"+today.getSeconds();
+    var new_text_input = time;
+    var code = `
+	var inputTextValue = "${new_text_input}";
   `;
   return code;
+  } else if(text_input == "Date"){
+    var today = new Date();
+    var time = today.getFullYear()+":"+today.getMonth()+":"+today.getDate();
+    var new_text_input = time;
+    var code = `
+	  var inputTextValue = "${new_text_input}";
+    `;
+    return code;
+  } else {
+    var code = `
+    var inputTextValue = "${text_input}";
+    `;
+    return code;
+  }
+  
 }
 
 
